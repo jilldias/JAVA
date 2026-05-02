@@ -8,7 +8,7 @@ Aqui serão reunidos conteúdos teóricos e práticos, incluindo:
 
 - 📘 Documentação sobre a linguagem Java  
 - 🌱 Estudos sobre **Spring Boot** e **Spring Framework**  
-- 📦 Gerenciadores de dependência (como Maven e Gradle)  
+- 📦 Gerenciadores de dependência (Maven)  
 - 📝 Resumos de conceitos importantes  
 - 🔗 Links úteis para materiais de apoio  
 - 💻 Arquivos `.java` para prática de sintaxe e recursos da linguagem  

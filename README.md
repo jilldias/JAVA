@@ -30,7 +30,7 @@ O principal objetivo deste repositório é consolidar o aprendizado em:
 
 Este é um repositório **incremental**, ou seja:
 
-> Novos conteúdos, códigos e anotações serão adicionados conforme o avanço dos estudos.
+Novos conteúdos, códigos e anotações serão adicionados conforme o avanço dos estudos.
 
 A ideia é acompanhar a evolução contínua dentro da stack de desenvolvimento backend com Java.
 
@@ -44,8 +44,3 @@ A ideia é acompanhar a evolução contínua dentro da stack de desenvolvimento 
 - Banco de Dados  
 - APIs REST  
 
----
-
-## Observações
-
-Este repositório serve tanto como material de estudo quanto como histórico de evolução no aprendizado da tecnologia.

@@ -1,0 +1,178 @@
+--REGULAR EXPRESSIONS--
+->  Uma expressão regular é uma string formatada que revela um padrao de pesquisa e substituição de textos. O metodo regex compila quando 
+o script é carregado, o que garante uma melhor performance quando aexpressão regular é uma constante. Essas expressoões
+faz validações nos dados de um programa, garantindo que esses dados esteja em um determinado formato. Para criar um regex é necessário
+informar os caracteres utilizados no padrão da expressão. 
+
+
+--CARACTERES ESPECIAIS USADOS EM EXPRESSÕES REGULARES--
+===========================================================================================================
+| Caractere | Descrição                                                                                 |
+===========================================================================================================
+| \          | Aplicado conforme as seguintes regras:                                                  |
+|            |                                                                                         |
+|            | Uma barra invertida que preceda um caractere não especial significa que o caractere    |
+|            | seguinte é especial e não deve ser interpretado de forma literal.                      |
+|            |                                                                                         |
+|            | Exemplo:                                                                                |
+|            | 'b'  -> caractere literal                                                               |
+|            | '\b' -> fronteira de caractere                                                          |
+|            |                                                                                         |
+|            | Quando a barra invertida preceder um caractere especial isso significará que o próximo  |
+|            | caractere deve ser interpretado de forma literal.                                       |
+|            |                                                                                         |
+|            | Exemplo:                                                                                |
+|            | /a*/  -> zero ou mais 'a'                                                               |
+|            | /a\*/ -> 'a' seguido de '*'                                                             |
+|            |                                                                                         |
+|            | Em RegExp("padrao"), é necessário escapar '\'                                           |
+|            | Exemplo: "\\d+"                                                                         |
+-----------------------------------------------------------------------------------------------------------
+| ^          | Corresponde ao início do texto.                                                         |
+|            | Em multiline também funciona após quebra de linha.                                      |
+|            |                                                                                         |
+|            | Exemplo: /^A/                                                                           |
+|            | Não encontra em: "Um Alvo"                                                              |
+|            | Encontra em: "Alvo Encontrado"                                                          |
+-----------------------------------------------------------------------------------------------------------
+| $          | Corresponde ao final do texto.                                                          |
+|            | Em multiline também funciona antes de quebra de linha.                                  |
+|            |                                                                                         |
+|            | Exemplo: /r$/                                                                           |
+|            | Não encontra em: "corre"                                                                |
+|            | Encontra em: "correr"                                                                   |
+-----------------------------------------------------------------------------------------------------------
+| *          | Corresponde a expressão anterior repetida 0 ou mais vezes.                              |
+|            | Equivalente a {0,}                                                                      |
+|            |                                                                                         |
+|            | Exemplo: /bo*/                                                                          |
+|            | Encontra: 'boo' em "boolean"                                                            |
+|            | Encontra: 'b' em "A bird warbled"                                                       |
+-----------------------------------------------------------------------------------------------------------
+| +          | Corresponde a expressão anterior repetida 1 ou mais vezes.                              |
+|            | Equivalente a {1,}                                                                      |
+|            |                                                                                         |
+|            | Exemplo: /a+/                                                                           |
+|            | Encontra 'a' em "candy"                                                                 |
+|            | Encontra "aaaaaaa" em "caaaaaaandy"                                                     |
+-----------------------------------------------------------------------------------------------------------
+| ?          | Corresponde a expressão anterior repetida 0 ou 1 vez.                                   |
+|            | Equivalente a {0,1}.                                                                    |
+|            |                                                                                         |
+|            | Exemplo: /e?le?/                                                                        |
+|            | Encontra 'el', 'le' e 'l'.                                                              |
+|            |                                                                                         |
+|            | Também pode tornar quantificadores não gulosos.                                         |
+|            | Exemplo: /\d+?/                                                                         |
+-----------------------------------------------------------------------------------------------------------
+| .          | Corresponde a qualquer caractere exceto quebra de linha.                                |
+|            |                                                                                         |
+|            | Exemplo: /.n/                                                                           |
+|            | Encontra: 'an' e 'on'                                                                   |
+-----------------------------------------------------------------------------------------------------------
+| (x)        | Grupo de captura.                                                                       |
+|            | Memoriza o valor encontrado.                                                            |
+|            |                                                                                         |
+|            | Exemplo: /(foo) (bar) \1 \2/                                                            |
+|            | Encontra: "foo bar foo bar"                                                             |
+-----------------------------------------------------------------------------------------------------------
+| (?:x)      | Grupo sem captura.                                                                      |
+|            | Agrupa sem memorizar.                                                                   |
+|            |                                                                                         |
+|            | Exemplo: /(?:foo){1,2}/                                                                 |
+-----------------------------------------------------------------------------------------------------------
+| x(?=y)     | Lookahead positivo.                                                                     |
+|            | Encontra x apenas se vier antes de y.                                                   |
+|            |                                                                                         |
+|            | Exemplo: /Jack(?=Sprat)/                                                                |
+-----------------------------------------------------------------------------------------------------------
+| x(?!y)     | Lookahead negativo.                                                                     |
+|            | Encontra x apenas se NÃO vier antes de y.                                               |
+|            |                                                                                         |
+|            | Exemplo: /\d+(?!\.)/                                                                    |
+-----------------------------------------------------------------------------------------------------------
+| x|y        | Corresponde a x OU y.                                                                   |
+|            |                                                                                         |
+|            | Exemplo: /verde|vermelha/                                                               |
+-----------------------------------------------------------------------------------------------------------
+| {n}        | Quantidade exata de ocorrências.                                                        |
+|            |                                                                                         |
+|            | Exemplo: /a{2}/                                                                         |
+-----------------------------------------------------------------------------------------------------------
+| {n,m}      | Quantidade mínima e máxima.                                                             |
+|            |                                                                                         |
+|            | Exemplo: /a{1,3}/                                                                       |
+-----------------------------------------------------------------------------------------------------------
+| [xyz]      | Conjunto de caracteres.                                                                 |
+|            |                                                                                         |
+|            | Exemplo: [abcd] ou [a-d]                                                                |
+-----------------------------------------------------------------------------------------------------------
+| [^xyz]     | Conjunto negado.                                                                        |
+|            | Corresponde a qualquer caractere não listado.                                           |
+|            |                                                                                         |
+|            | Exemplo: [^abc]                                                                         |
+-----------------------------------------------------------------------------------------------------------
+| [\b]       | Corresponde ao caractere backspace (U+0008).                                            |
+|            | Não confundir com \b.                                                                   |
+-----------------------------------------------------------------------------------------------------------
+| \b         | Fronteira de palavra.                                                                   |
+|            |                                                                                         |
+|            | Exemplos:                                                                               |
+|            | /\bmoo/                                                                                 |
+|            | /oon\b/                                                                                 |
+-----------------------------------------------------------------------------------------------------------
+| \B         | Não fronteira de palavra.                                                               |
+|            |                                                                                         |
+|            | Exemplo: /\B../                                                                         |
+-----------------------------------------------------------------------------------------------------------
+| \cX        | Caractere de controle.                                                                  |
+|            |                                                                                         |
+|            | Exemplo: /\cM/                                                                          |
+-----------------------------------------------------------------------------------------------------------
+| \d         | Dígito numérico.                                                                        |
+|            | Equivalente a [0-9].                                                                    |
+-----------------------------------------------------------------------------------------------------------
+| \D         | Não dígito.                                                                             |
+|            | Equivalente a [^0-9].                                                                   |
+-----------------------------------------------------------------------------------------------------------
+| \f         | Avanço de página (U+000C).                                                              |
+-----------------------------------------------------------------------------------------------------------
+| \n         | Quebra de linha (U+000A).                                                               |
+-----------------------------------------------------------------------------------------------------------
+| \r         | Retorno de carro (U+000D).                                                              |
+-----------------------------------------------------------------------------------------------------------
+| \s         | Espaço em branco.                                                                       |
+|            | Inclui espaços, tabs e quebras de linha.                                                |
+-----------------------------------------------------------------------------------------------------------
+| \S         | Não espaço em branco.                                                                   |
+-----------------------------------------------------------------------------------------------------------
+| \t         | Tabulação horizontal (U+0009).                                                          |
+-----------------------------------------------------------------------------------------------------------
+| \v         | Tabulação vertical (U+000B).                                                            |
+-----------------------------------------------------------------------------------------------------------
+| \w         | Caractere alfanumérico + underline.                                                     |
+|            | Equivalente a [A-Za-z0-9_]                                                              |
+-----------------------------------------------------------------------------------------------------------
+| \W         | Não alfanumérico.                                                                       |
+|            | Equivalente a [^A-Za-z0-9_]                                                             |
+-----------------------------------------------------------------------------------------------------------
+| \num       | Referência para grupo capturado.                                                        |
+|            | Exemplo: \1 \2                                                                          |
+-----------------------------------------------------------------------------------------------------------
+| \0         | Caractere NULL (U+0000).                                                                |
+-----------------------------------------------------------------------------------------------------------
+| \xhh       | Código hexadecimal de 2 dígitos.                                                        |
+|            | Exemplo: \x41 -> A                                                                      |
+-----------------------------------------------------------------------------------------------------------
+| \uhhhh     | Unicode hexadecimal.                                                                    |
+|            | Exemplo: \u0041 -> A                                                                    |
+-----------------------------------------------------------------------------------------------------------
+| \u{hhhh}   | Unicode expandido (flag u).                                                             |
+|            | Exemplo: \u{1F600}                                                                      |
+===========================================================================================================
+
+
+
+--FONTES--
+-> https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Regular_expressions
+-> https://www.devmedia.com.br/conceitos-basicos-sobre-expressoes-regulares-em-java/27539

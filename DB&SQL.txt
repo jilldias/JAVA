@@ -1,0 +1,418 @@
+-- SQL (Structured Query Language) e DB(DataBase)--
+
+-> Antes de definir o que é SQL, precisamos definir o que é um banco de dados.
+
+-> Um banco de dados é um conjunto de informações organizadas que estão armazenadas em um sistema (manual ou eletrônico).
+
+-> Um dado é a menor unidade de informação, o que compõe uma tabela. Um conjunto de tabelas forma um banco de dados.
+
+A definição pode ser observada abaixo:
+
+====================================================================
+DADO
+====================================================================
+
+Um dado é uma informação única e isolada.
+
+Exemplos:
+--------------------------------------------------
+"Jill"
+22
+"Brasil"
+true
+95.7
+--------------------------------------------------
+
+Visualmente:
+
++------------------+
+| DADO             |
++------------------+
+| Nome: Jill       |
++------------------+
+
+Outro exemplo:
+
++------------------+
+| DADO             |
++------------------+
+| Idade: 22        |
++------------------+
+
+
+====================================================================
+TABELA
+====================================================================
+
+Uma tabela organiza vários dados relacionados
+em linhas e colunas.
+
+Exemplo:
+Tabela de usuários.
+
++----+----------+-------+----------------------+
+| ID | NOME     | IDADE | EMAIL                |
++----+----------+-------+----------------------+
+| 1  | Ana      | 20    | ana@email.com        |
+| 2  | Carlos   | 31    | carlos@email.com     |
+| 3  | Jill     | 22    | jill@email.com       |
++----+----------+-------+----------------------+
+
+Estrutura:
+
+COLUNAS
+   ↓
+
++----+----------+-------+
+| ID | NOME     | IDADE |
++----+----------+-------+
+| 1  | Ana      | 20    | ← LINHA / REGISTRO
+| 2  | Carlos   | 31    |
++----+----------+-------+
+
+Cada célula:
+----------------
+| Ana |
+----------------
+
+é um DADO.
+
+
+====================================================================
+BANCO DE DADOS
+====================================================================
+
+Um banco de dados é um conjunto organizado
+de tabelas relacionadas.
+
+Visualização:
+
+                 BANCO DE DADOS
+          "Sistema da Empresa"
+
+     +-----------------------------+
+     | TABELA: usuarios            |
+     +-----------------------------+
+     | id | nome | idade | email  |
+     +-----------------------------+
+
+     +-----------------------------+
+     | TABELA: produtos            |
+     +-----------------------------+
+     | id | nome | preco           |
+     +-----------------------------+
+
+     +-----------------------------+
+     | TABELA: pedidos             |
+     +-----------------------------+
+     | id | usuario_id | produto_id|
+     +-----------------------------+
+
+
+====================================================================
+RELAÇÃO ENTRE AS PARTES
+====================================================================
+
+DADO
+ ↓
+Menor unidade de informação
+
+Ex:
+----------------
+| "Jill" |
+----------------
+
+
+VÁRIOS DADOS
+ ↓
+formam uma LINHA
+
++----+------+-------+
+| 1  | Jill | 22    |
++----+------+-------+
+
+
+VÁRIAS LINHAS
+ ↓
+formam uma TABELA
+
++----+------+-------+
+| ID | Nome | Idade | -> Atributo, coluna ou campo.
++----+------+-------+
+| 1  | Jill | 22    | -> Tupla, linha ou registros.
+| 2  | Ana  | 20    |
++----+------+-------+
+
+
+VÁRIAS TABELAS
+ ↓
+formam um BANCO DE DADOS
+
++----------------------+
+| Banco de Dados       |
++----------------------+
+| usuarios             |
+| produtos             |
+| pedidos              |
++----------------------+
+
+
+====================================================================
+EXEMPLO COMPLETO
+====================================================================
+
+BANCO DE DADOS: Escola
+│
+├── TABELA alunos
+│      ├── dado: "João"
+│      ├── dado: 18
+│      └── dado: "3A"
+│
+├── TABELA professores
+│      ├── dado: "Maria"
+│      └── dado: "Matemática"
+│
+└── TABELA notas
+       ├── dado: 9.5
+       └── dado: 7.0
+
+
+====================================================================
+RESUMO FINAL
+====================================================================
+
++----------------+----------------------------------+
+| CONCEITO       | DEFINIÇÃO                       |
++----------------+----------------------------------+
+| DADO           | Informação isolada              |
+| TABELA         | Conjunto organizado de dados    |
+| BANCO DE DADOS | Conjunto organizado de tabelas  |
++----------------+----------------------------------+
+====================================================================
+
+--SISTEMA GERENCIADOR DE BANCO DE DADOS--
+Um SGBD é uma coleção de dados inter-relaconados e um conjunto de softwares que acessam esses dados. O SGBD proporciona 
+um ambiente para recuperar e armazenar informações no banco de dados. Esse sistema contem 4 componentes basicos, sendo:
+-> Hardware: São os meios em que os dados são armazenados. 
+-> Dados: Os dados armazenados são repartidos e podem ser acessados por usuários diferentes.
+-> Software: Sistema que se encontra entre o usuário e o hardware, que serve unicamente para gerenciar o banco de dados.
+-> Usuários: Existem três classes de usuários, sendo o primeiro responsável por escrever programas de aplicaçãoque usam o banco de dados;
+a segunda classe é o usuário final que acessa o banco de dados através de um terminal que faz o uso de uma linguagem para fazer o acesso, essa linguagem pode ser o SQL.
+E a ultima classe é o administrador de banco de dados(DBA). Ele analisa quais informações podem ser mantidas, identificam as entidades de interesse das empresas e é 
+responsável pelo desempenho do sistema. 
+
+--MODELO RELACIONAL--
+Nesse modelo de banco de dados as relações acontecem através de tabelas. Uma tabela possui linhas e colunas e todas as tabelas devem possuir um nome e um conjunto de 
+atributos|campos. As colunas são os atributos da tabela e devem possuir um nome e o tipo de dado que será armazenado na coluna. Cada conjunto de atributos formam uma linha|registro
+,que também pode ser chamado de tupla. Nesse modelo os dados devem estar organizados e separados de acordo com suas relações.
+
+====================================================================
+BANCO DE DADOS RELACIONAL (SQL)
+====================================================================
+
+Os dados ficam organizados em TABELAS
+relacionadas entre si.
+
+Usa:
+- linhas
+- colunas
+- chaves
+- relacionamentos
+
+Exemplos de sistemas de gerenciamento:
+--------------------------------------------------
+MySQL
+PostgreSQL
+Oracle
+SQL Server
+SQLite
+--------------------------------------------------
+
+
+====================================================================
+EXEMPLO
+====================================================================
+
+Sistema de loja.
+
+
+TABELA: clientes
++-------------+----------+-------------------+
+| cliente_id  | nome     | cidade            |
++-------------+----------+-------------------+
+| 1           | Ana      | São Paulo         |
+| 2           | Carlos   | Rio de Janeiro    |
++-------------+----------+-------------------+
+
+
+TABELA: pedidos
++------------+-------------+--------------+
+| pedido_id  | cliente_id  | valor        |
++------------+-------------+--------------+
+| 101        | 1           | 150.00       |
+| 102        | 2           | 300.00       |
+| 103        | 1           | 90.00        |
++------------+-------------+--------------+
+
+
+====================================================================
+RELACIONAMENTO
+====================================================================
+
+A coluna:
+
+cliente_id
+
+na tabela "pedidos"
+aponta para:
+
+cliente_id
+
+na tabela "clientes".
+
+Visualmente:
+
+clientes
++----+---------+
+| 1  | Ana     |
+| 2  | Carlos  |
++----+---------+
+   ↑
+   │ relacionamento
+   │
+pedidos
++------+------------+
+| 101  | cliente 1  |
+| 102  | cliente 2  |
+| 103  | cliente 1  |
++------+------------+
+
+
+====================================================================
+CONSULTA SQL
+====================================================================
+
+Exemplo:
+
+"mostrar pedidos com nome do cliente"
+
+SQL:
+
+SELECT clientes.nome, pedidos.valor
+FROM clientes
+JOIN pedidos
+ON clientes.cliente_id = pedidos.cliente_id;
+
+
+Resultado:
+
++----------+---------+
+| nome     | valor   |
++----------+---------+
+| Ana      | 150.00  |
+| Carlos   | 300.00  |
+| Ana      | 90.00   |
++----------+---------+
+
+
+====================================================================
+
+
+--MODELO NÃO-RELACIONAL--
+Modelo mais atual que permite o acesso aos dados fora das estruturas encontradas no banco de dados relacionais. O NoSQL pode acessar dados do banco relacional. Essa estrutura
+ao invés de armazenar os dados de forma tabular, ele os armazena em um documento em forma de JSON.
+
+====================================================================
+BANCO DE DADOS NÃO RELACIONAL (NoSQL)
+====================================================================
+
+Os dados NÃO precisam ficar em tabelas rígidas.
+
+Os formatos podem variar.
+
+Pode usar:
+- documentos
+- chave/valor
+- grafos
+- colunas
+
+Exemplos de sistemas de gerenciamento:
+--------------------------------------------------
+MongoDB
+Redis
+Cassandra
+Neo4j
+Firebase
+--------------------------------------------------
+
+
+====================================================================
+EXEMPLO (MongoDB)
+====================================================================
+
+Coleção: clientes
+
+Documento 1:
+{
+    "nome": "Ana",
+    "cidade": "São Paulo",
+    "pedidos": [
+        {
+            "produto": "Notebook",
+            "valor": 1500
+        },
+        {
+            "produto": "Mouse",
+            "valor": 80
+        }
+    ]
+}
+
+Documento 2:
+{
+    "nome": "Carlos",
+    "telefone": "99999-9999",
+    "vip": true
+}
+
+
+====================================================================
+VISUALMENTE
+====================================================================
+
+COLEÇÃO: clientes
+
+┌─────────────────────────────┐
+│ Documento 1                 │
+│ nome: Ana                   │
+│ cidade: São Paulo           │
+│ pedidos: [...]              │
+└─────────────────────────────┘
+
+┌─────────────────────────────┐
+│ Documento 2                 │
+│ nome: Carlos                │
+│ telefone: 99999-9999        │
+│ vip: true                   │
+└─────────────────────────────┘
+====================================================================
+OBSERVAÇÂO: O SQL é a linguagem padrão que gerencia, manipula e consulta banco de dados relacionais. Sistemas como MariaDB, MySQL, PostGress são Sistemas Gerenciador
+de Banco de Dados (SGBD).
+
+--A LINGUAGEM SQL--
+Embora seja considerada uma linguagem de consulta, ela tambem possui recursos para definição de estruturas de dados, para modificar dados no banco e recursos para especificar
+restrições de segurança e identidade. A linguage possui diversas partes, sendo as principais:
+-> Data Definition Language(DDL): Fornece comandos para definir e modificar os esquemas de relação, remoção e criação de índices. Comandos pricipais: CREATE, ALTER, DROP.
+-> Data Manipulation Language(DML): Modelo de busca baseada baseada em álgera e cálculo relacional, e inclui comandos para inserir, remover e modificar informações. 
+Comandos principais: SELECT, INSERT, UPDATE, DELETE.
+-> Data Control Language(DCL): Conjunto de comandos que realiza o cadastro de usuários e determina o nível de privilégio para objetos no banco de dados. 
+Comandos principais: GRANT, REVOKE.
+->Transactions Control: Possui comandos que especificam o início e o fim das transações. Algumas implementações permitem o trancamento explícito dos dados para controle de concorrência.
+Comandos: COMMIT, ROLLBACK, SAVEPOINT.
+
+[Continua...]
+
+
+--FONTES--
+-> FERNEDA, Edberto. Introdução à Linguagem SQL. USP|SP. 
+-> https://www.ibm.com/br-pt/think/topics/database

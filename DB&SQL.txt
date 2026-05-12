@@ -399,9 +399,18 @@ COLEÇÃO: clientes
 OBSERVAÇÂO: O SQL é a linguagem padrão que gerencia, manipula e consulta banco de dados relacionais. Sistemas como MariaDB, MySQL, PostGress são Sistemas Gerenciador
 de Banco de Dados (SGBD).
 
+--TERMINAL--
+Nos softwares de gerenciamento, toda a interação será feita através de um terminal (CLI). No terminal é usado texto puro para enviar instruções aos SGBD. É através do terminal
+que os DBA's realizam consultas, atualizações, importação de dados, e ainda permite uma conexão segura com os bancos de dados via SSH. É importante salientar que o terminal é
+a parte visual onde é digitado os comandos, o shell é o programa que roda no terminal em que digitamos, como no meu caso, o bash é modelo de shell que eu uso, padrão na maioria 
+das distribuições linux. 
+
 --A LINGUAGEM SQL--
 Embora seja considerada uma linguagem de consulta, ela tambem possui recursos para definição de estruturas de dados, para modificar dados no banco e recursos para especificar
-restrições de segurança e identidade. A linguage possui diversas partes, sendo as principais:
+restrições de segurança e identidade. SQL pode ser definida como uma linguagem de uso especial, sendo usada somente para gerenciar banco de dados relacional. No ano de 1986
+a ANSI definiu a linguagem SQL como padrão e documentaram centenas de especificações detalhadas sobre como uma linguagem de baco de dados deve funcionar. 
+A linguagem possui
+diversas partes, sendo as principais:
 -> Data Definition Language(DDL): Fornece comandos para definir e modificar os esquemas de relação, remoção e criação de índices. Comandos pricipais: CREATE, ALTER, DROP.
 -> Data Manipulation Language(DML): Modelo de busca baseada baseada em álgera e cálculo relacional, e inclui comandos para inserir, remover e modificar informações. 
 Comandos principais: SELECT, INSERT, UPDATE, DELETE.
@@ -410,9 +419,282 @@ Comandos principais: GRANT, REVOKE.
 ->Transactions Control: Possui comandos que especificam o início e o fim das transações. Algumas implementações permitem o trancamento explícito dos dados para controle de concorrência.
 Comandos: COMMIT, ROLLBACK, SAVEPOINT.
 
-[Continua...]
+===========================================================
+               COMANDOS SQL - TABELA RESUMIDA
+===========================================================
+
+-----------------------------------------------------------
+CRIAÇÃO DE BANCO DE DADOS
+-----------------------------------------------------------
+
+CRIAR BANCO:
+CREATE DATABASE nome_banco;
+
+USAR BANCO:
+USE nome_banco;
+
+EXCLUIR BANCO:
+DROP DATABASE nome_banco;
+
+-----------------------------------------------------------
+CRIAÇÃO DE TABELAS
+-----------------------------------------------------------
+
+CRIAR TABELA:
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY,
+    nome VARCHAR(100),
+    idade INT
+);
+
+EXCLUIR TABELA:
+DROP TABLE usuarios;
+
+RENOMEAR TABELA:
+RENAME TABLE usuarios TO clientes;
+
+-----------------------------------------------------------
+ALTERAÇÃO DE TABELAS
+-----------------------------------------------------------
+
+ADICIONAR COLUNA:
+ALTER TABLE usuarios
+ADD email VARCHAR(100);
+
+MODIFICAR COLUNA:
+ALTER TABLE usuarios
+MODIFY nome VARCHAR(200);
+
+RENOMEAR COLUNA:
+ALTER TABLE usuarios
+RENAME COLUMN nome TO nome_completo;
+
+REMOVER COLUNA:
+ALTER TABLE usuarios
+DROP COLUMN email;
+
+-----------------------------------------------------------
+INSERÇÃO DE DADOS
+-----------------------------------------------------------
+
+INSERIR DADOS:
+INSERT INTO usuarios (id, nome, idade)
+VALUES (1, 'Jill', 20);
+
+INSERIR MÚLTIPLAS LINHAS:
+INSERT INTO usuarios
+VALUES
+(2, 'Ana', 19),
+(3, 'Carlos', 25);
+
+-----------------------------------------------------------
+CONSULTA DE DADOS
+-----------------------------------------------------------
+
+SELECIONAR TODOS:
+SELECT * FROM usuarios;
+
+SELECIONAR COLUNAS:
+SELECT nome, idade FROM usuarios;
+
+FILTRAR DADOS:
+SELECT * FROM usuarios
+WHERE idade > 18;
+
+ORDENAR:
+SELECT * FROM usuarios
+ORDER BY nome ASC;
+
+LIMITAR RESULTADOS:
+SELECT * FROM usuarios
+LIMIT 5;
+
+-----------------------------------------------------------
+OPERADORES
+-----------------------------------------------------------
+
+IGUAL:
+WHERE idade = 20
+
+DIFERENTE:
+WHERE idade != 20
+
+MAIOR:
+WHERE idade > 20
+
+MENOR:
+WHERE idade < 20
+
+ENTRE:
+WHERE idade BETWEEN 18 AND 30
+
+LISTA:
+WHERE cidade IN ('SP', 'RJ')
+
+PESQUISA:
+WHERE nome LIKE '%an%'
+
+-----------------------------------------------------------
+ATUALIZAÇÃO DE DADOS
+-----------------------------------------------------------
+
+ATUALIZAR:
+UPDATE usuarios
+SET idade = 21
+WHERE id = 1;
+
+-----------------------------------------------------------
+REMOÇÃO DE DADOS
+-----------------------------------------------------------
+
+REMOVER LINHA:
+DELETE FROM usuarios
+WHERE id = 1;
+
+REMOVER TODOS OS DADOS:
+TRUNCATE TABLE usuarios;
+
+-----------------------------------------------------------
+CHAVES
+-----------------------------------------------------------
+
+PRIMARY KEY:
+id INT PRIMARY KEY
+
+FOREIGN KEY:
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY,
+    usuario_id INT,
+    FOREIGN KEY (usuario_id)
+    REFERENCES usuarios(id)
+);
+
+-----------------------------------------------------------
+JOINS
+-----------------------------------------------------------
+
+INNER JOIN:
+SELECT usuarios.nome, pedidos.id
+FROM usuarios
+INNER JOIN pedidos
+ON usuarios.id = pedidos.usuario_id;
+
+LEFT JOIN:
+SELECT *
+FROM usuarios
+LEFT JOIN pedidos
+ON usuarios.id = pedidos.usuario_id;
+
+RIGHT JOIN:
+SELECT *
+FROM usuarios
+RIGHT JOIN pedidos
+ON usuarios.id = pedidos.usuario_id;
+
+-----------------------------------------------------------
+FUNÇÕES
+-----------------------------------------------------------
+
+CONTAR:
+SELECT COUNT(*) FROM usuarios;
+
+MÉDIA:
+SELECT AVG(idade) FROM usuarios;
+
+MÁXIMO:
+SELECT MAX(idade) FROM usuarios;
+
+MÍNIMO:
+SELECT MIN(idade) FROM usuarios;
+
+SOMA:
+SELECT SUM(idade) FROM usuarios;
+
+-----------------------------------------------------------
+AGRUPAMENTO
+-----------------------------------------------------------
+
+AGRUPAR:
+SELECT cidade, COUNT(*)
+FROM usuarios
+GROUP BY cidade;
+
+FILTRAR GRUPOS:
+SELECT cidade, COUNT(*)
+FROM usuarios
+GROUP BY cidade
+HAVING COUNT(*) > 5;
+
+-----------------------------------------------------------
+ÍNDICES
+-----------------------------------------------------------
+
+CRIAR ÍNDICE:
+CREATE INDEX idx_nome
+ON usuarios(nome);
+
+REMOVER ÍNDICE:
+DROP INDEX idx_nome;
+
+-----------------------------------------------------------
+USUÁRIOS E PERMISSÕES
+-----------------------------------------------------------
+
+CRIAR USUÁRIO:
+CREATE USER 'jill' IDENTIFIED BY '123';
+
+DAR PERMISSÃO:
+GRANT ALL PRIVILEGES
+ON banco.*
+TO 'jill';
+
+REMOVER PERMISSÃO:
+REVOKE ALL PRIVILEGES
+ON banco.*
+FROM 'jill';
+
+-----------------------------------------------------------
+COMANDOS IMPORTANTES
+-----------------------------------------------------------
+
+MOSTRAR BANCOS:
+SHOW DATABASES;
+
+MOSTRAR TABELAS:
+SHOW TABLES;
+
+DESCREVER TABELA:
+DESCRIBE usuarios;
+
+-----------------------------------------------------------
+TIPOS DE DADOS
+-----------------------------------------------------------
+
+INT            -> Número inteiro
+FLOAT          -> Número decimal
+VARCHAR(n)     -> Texto variável
+CHAR(n)        -> Texto fixo
+TEXT           -> Texto longo
+DATE           -> Data
+TIME           -> Hora
+DATETIME       -> Data e hora
+BOOLEAN        -> Verdadeiro/Falso
+
+-----------------------------------------------------------
+BOAS PRÁTICAS
+-----------------------------------------------------------
+
+- Sempre usar WHERE em UPDATE e DELETE
+- Utilizar PRIMARY KEY
+- Criar índices em colunas muito pesquisadas
+- Nomear tabelas claramente
+- Evitar SELECT * em sistemas grandes
+- Fazer backup regularmente
+
+===========================================================
 
 
 --FONTES--
--> FERNEDA, Edberto. Introdução à Linguagem SQL. USP|SP. 
+-> ZHAO, Alice. SQL. Um guia prático para o uso de SQL. NovaTec/SP. 2022.
+-> FERNEDA, Edberto. Introdução à Linguagem SQL. USP/SP. 
 -> https://www.ibm.com/br-pt/think/topics/database
